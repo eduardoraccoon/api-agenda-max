@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("api-iso-med-pg")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cb81ab063de8ac7fc5c161fe0c508224db9a40d1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+72d86ce58c96607f90cd5a12111985d547cbc2dd")]
 [assembly: System.Reflection.AssemblyProductAttribute("api-iso-med-pg")]
 [assembly: System.Reflection.AssemblyTitleAttribute("api-iso-med-pg")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
