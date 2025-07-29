@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  api-sgc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api-iso-med-pg
+    ports:
+      - "5257:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+    volumes:
+      - ./appsettings.Production.json:/app/appsettings.json:ro
+      - ./Files:/app/Files
+      - ./DataProtection-Keys:/root/.aspnet/DataProtection-Keys
+    restart: unless-stopped

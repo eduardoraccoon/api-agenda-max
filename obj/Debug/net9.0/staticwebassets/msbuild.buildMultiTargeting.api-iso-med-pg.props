@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/api-iso-med-pg.props" />
+</Project>
