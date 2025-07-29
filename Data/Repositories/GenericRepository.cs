@@ -44,6 +44,20 @@ namespace api_iso_med_pg.Data.Repositories
 
         public async Task UpdateAsync(T entity)
         {
+            // Forzar UTC en propiedades UpdatedAt y CreatedAt si existen
+            var nowUtc = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
+            var updatedAtProp = entity.GetType().GetProperty("UpdatedAt");
+            var createdAtProp = entity.GetType().GetProperty("CreatedAt");
+            if (updatedAtProp != null)
+            {
+                var val = updatedAtProp.GetValue(entity) as DateTime?;
+                updatedAtProp.SetValue(entity, DateTime.SpecifyKind(val ?? nowUtc, DateTimeKind.Utc));
+            }
+            if (createdAtProp != null)
+            {
+                var val = createdAtProp.GetValue(entity) as DateTime?;
+                createdAtProp.SetValue(entity, DateTime.SpecifyKind(val ?? nowUtc, DateTimeKind.Utc));
+            }
             _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
@@ -53,16 +67,28 @@ namespace api_iso_med_pg.Data.Repositories
             var entity = await _dbSet.FindAsync(id);
             if (entity != null)
             {
-                var deletedByProp = entity.GetType().GetProperty("DeletedBy");
+                // Forzar UTC en propiedades DeletedAt, UpdatedAt, CreatedAt si existen
+                var nowUtc = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
                 var deletedAtProp = entity.GetType().GetProperty("DeletedAt");
-                if (deletedByProp != null)
-                {
-                    deletedByProp.SetValue(entity, deletedBy);
-                }
+                var updatedAtProp = entity.GetType().GetProperty("UpdatedAt");
+                var createdAtProp = entity.GetType().GetProperty("CreatedAt");
+                var deletedByProp = entity.GetType().GetProperty("DeletedBy");
+
                 if (deletedAtProp != null)
+                    deletedAtProp.SetValue(entity, nowUtc);
+                if (updatedAtProp != null)
                 {
-                    deletedAtProp.SetValue(entity, DateTime.UtcNow);
+                    var val = updatedAtProp.GetValue(entity) as DateTime?;
+                    updatedAtProp.SetValue(entity, DateTime.SpecifyKind(val ?? nowUtc, DateTimeKind.Utc));
                 }
+                if (createdAtProp != null)
+                {
+                    var val = createdAtProp.GetValue(entity) as DateTime?;
+                    createdAtProp.SetValue(entity, DateTime.SpecifyKind(val ?? nowUtc, DateTimeKind.Utc));
+                }
+                if (deletedByProp != null)
+                    deletedByProp.SetValue(entity, deletedBy);
+
                 _context.Entry(entity).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }

@@ -11,14 +11,12 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
+    
 builder.Services.AddScoped<IScrumRepository, ScrumRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<INormRepository, NormRepository>();
 
 // Registro de AutoMapper
-builder.Services.AddAutoMapper(typeof(api_iso_med_pg.Mappers.ProductProfile));
 builder.Services.AddAutoMapper(typeof(api_iso_med_pg.Mappers.NormProfile));
 builder.Services.AddAutoMapper(typeof(api_iso_med_pg.Mappers.ScrumProfile));
 

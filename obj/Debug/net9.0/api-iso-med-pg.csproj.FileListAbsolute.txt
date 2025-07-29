@@ -140,3 +140,5 @@
 /home/edalvz/Development/dotnet/api-iso-med-pg/bin/Debug/net9.0/tr/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 /home/edalvz/Development/dotnet/api-iso-med-pg/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 /home/edalvz/Development/dotnet/api-iso-med-pg/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
+/home/edalvz/Development/dotnet/api-iso-med-pg/bin/Debug/net9.0/appsettings.Production.json
+/home/edalvz/Development/dotnet/api-iso-med-pg/obj/Debug/net9.0/api-iso-med-pg.sourcelink.json

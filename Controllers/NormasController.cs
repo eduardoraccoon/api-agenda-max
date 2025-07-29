@@ -11,25 +11,25 @@ namespace api_iso_med_pg.Controllers
     [ApiController]
     [Authorize]
     [Route("api/[controller]")]
-    public class NormsController : ControllerBase
+    public class NormasController : ControllerBase
     {
         private readonly INormRepository _repository;
         private readonly IMapper _mapper;
-        public NormsController(INormRepository repository, IMapper mapper)
+        public NormasController(INormRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<BaseResponse<IEnumerable<NormDto>>>> Get()
+        public async Task<ActionResult<BaseResponse<IEnumerable<NormaDto>>>> Get()
         {
             try
             {
                 var norms = await _repository.GetAllAsync();
-                var dtos = _mapper.Map<IEnumerable<NormDto>>(norms);
+                var dtos = _mapper.Map<IEnumerable<NormaDto>>(norms);
                 var reply = dtos != null && dtos.Any() ? ReplyMessage.MESSAGE_QUERY : ReplyMessage.MESSAGE_QUERY_EMPTY;
-                return Ok(new BaseResponse<IEnumerable<NormDto>>
+                return Ok(new BaseResponse<IEnumerable<NormaDto>>
                 {
                     IsSuccess = true,
                     Data = dtos,
@@ -38,7 +38,7 @@ namespace api_iso_med_pg.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new BaseResponse<IEnumerable<NormDto>>
+                return StatusCode(500, new BaseResponse<IEnumerable<NormaDto>>
                 {
                     IsSuccess = false,
                     Data = null,
@@ -48,20 +48,20 @@ namespace api_iso_med_pg.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<BaseResponse<NormDto>>> Get(int id)
+        public async Task<ActionResult<BaseResponse<NormaDto>>> Get(int id)
         {
             try
             {
                 var norm = await _repository.GetByIdAsync(id);
                 if (norm == null)
-                    return NotFound(new BaseResponse<NormDto>
+                    return NotFound(new BaseResponse<NormaDto>
                     {
                         IsSuccess = false,
                         Data = null,
                         Message = ReplyMessage.MESSAGE_QUERY_EMPTY
                     });
-                var dto = _mapper.Map<NormDto>(norm);
-                return Ok(new BaseResponse<NormDto>
+                var dto = _mapper.Map<NormaDto>(norm);
+                return Ok(new BaseResponse<NormaDto>
                 {
                     IsSuccess = true,
                     Data = dto,
@@ -70,7 +70,7 @@ namespace api_iso_med_pg.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new BaseResponse<NormDto>
+                return StatusCode(500, new BaseResponse<NormaDto>
                 {
                     IsSuccess = false,
                     Data = null,
@@ -80,19 +80,18 @@ namespace api_iso_med_pg.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<BaseResponse<string>>> Post(CreateNormDto dto)
+        public async Task<ActionResult<BaseResponse<string>>> Post(CreateNormaDto dto)
         {
             try
             {
-                // Obtener el id del usuario logueado desde el token
                 var userIdClaim = User.FindFirst("id")?.Value;
                 if (int.TryParse(userIdClaim, out int userId))
                 {
                     dto.CreatedBy = userId;
                 }
                 dto.CreatedAt = DateTime.UtcNow;
-                var norm = _mapper.Map<Norm>(dto);
-                var created = await _repository.AddAsync(norm);
+                var norma = _mapper.Map<Norma>(dto);
+                var created = await _repository.AddAsync(norma);
                 return Ok(new BaseResponse<string>
                 {
                     IsSuccess = true,
@@ -112,7 +111,7 @@ namespace api_iso_med_pg.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(UpdateNormDto dto)
+        public async Task<IActionResult> Put(UpdateNormaDto dto)
         {
             try
             {
@@ -126,7 +125,7 @@ namespace api_iso_med_pg.Controllers
                         Message = ReplyMessage.MESSAGE_QUERY_EMPTY
                     });
                 }
-                // Obtener el id del usuario logueado desde el token
+
                 var userIdClaim = User.FindFirst("id")?.Value;
                 if (int.TryParse(userIdClaim, out int userId))
                 {
@@ -134,9 +133,7 @@ namespace api_iso_med_pg.Controllers
                 }
                 dto.UpdatedAt = DateTime.UtcNow;
                 _mapper.Map(dto, existing);
-                // Forzar Kind=Utc en fechas relevantes de forma simplificada
-                existing.UpdatedAt = DateTime.SpecifyKind(existing.UpdatedAt ?? DateTime.UtcNow, DateTimeKind.Utc);
-                existing.CreatedAt = DateTime.SpecifyKind(existing.CreatedAt ?? DateTime.UtcNow, DateTimeKind.Utc);
+
                 await _repository.UpdateAsync(existing);
                 return Ok(new BaseResponse<string>
                 {
@@ -169,7 +166,7 @@ namespace api_iso_med_pg.Controllers
                         Data = null,
                         Message = ReplyMessage.MESSAGE_QUERY_EMPTY
                     });
-                // Obtener el id del usuario logueado desde el token
+
                 var userIdClaim = User.FindFirst("id")?.Value;
                 int deletedBy = 0;
                 if (int.TryParse(userIdClaim, out int userId))

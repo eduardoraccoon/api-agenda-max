@@ -8,11 +8,11 @@ namespace api_iso_med_pg.Mappers
     {
         public NormProfile()
         {
-            CreateMap<Norm, NormDto>().ReverseMap();
-            CreateMap<CreateNormDto, Norm>()
+            CreateMap<Norma, NormaDto>().ReverseMap();
+            CreateMap<CreateNormaDto, Norma>()
                 .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreatedBy))
                 .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt));
-            CreateMap<UpdateNormDto, Norm>()
+            CreateMap<UpdateNormaDto, Norma>()
                 .ForMember(dest => dest.UpdatedBy, opt => opt.MapFrom(src => src.UpdatedBy))
                 .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => src.UpdatedAt));
         }

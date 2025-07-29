@@ -172,10 +172,7 @@ namespace api_iso_med_pg.Controllers
                 {
                     deletedBy = userId;
                 }
-                // Forzar Kind=Utc en campos DateTime relevantes antes de guardar
-                existing.UpdatedAt = DateTime.SpecifyKind(existing.UpdatedAt ?? DateTime.UtcNow, DateTimeKind.Utc);
-                existing.CreatedAt = DateTime.SpecifyKind(existing.CreatedAt ?? DateTime.UtcNow, DateTimeKind.Utc);
-                existing.DeletedAt = DateTime.SpecifyKind(existing.DeletedAt ?? DateTime.UtcNow, DateTimeKind.Utc);
+                
                 existing.Start = existing.Start.HasValue ? DateTime.SpecifyKind(existing.Start.Value, DateTimeKind.Utc) : (DateTime?)null;
                 existing.End = existing.End.HasValue ? DateTime.SpecifyKind(existing.End.Value, DateTimeKind.Utc) : (DateTime?)null;
                 await _repository.DeleteAsync(id, deletedBy);

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace api_iso_med_pg.Data.Interfaces
 {
-    public interface INormRepository : IGenericRepository<Norm>
+    public interface INormRepository : IGenericRepository<Norma>
     {
         // Puedes agregar métodos específicos aquí si lo necesitas
     }
