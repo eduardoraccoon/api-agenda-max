@@ -13,9 +13,9 @@ namespace api_iso_med_pg.Controllers
     [Route("api/[controller]")]
     public class NormasController : ControllerBase
     {
-        private readonly INormRepository _repository;
+        private readonly INormaRepository _repository;
         private readonly IMapper _mapper;
-        public NormasController(INormRepository repository, IMapper mapper)
+        public NormasController(INormaRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
