@@ -9,6 +9,6 @@ namespace api_iso_med_pg
         public DbSet<User> Users { get; set; }
         public DbSet<Norma> Normas { get; set; }
         public DbSet<Scrum> Scrums { get; set; }
-        public DbSet<Equipamiento> Equipamientos { get; set; }
+        public DbSet<Entrevista> Entrevistas { get; set; }
     }
 }

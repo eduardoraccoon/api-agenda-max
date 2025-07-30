@@ -17,10 +17,12 @@ builder.Services.AddScoped<IEquipamientoRepository, EquipamientoRepository>();
 builder.Services.AddScoped<IScrumRepository, ScrumRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<INormaRepository, NormaRepository>();
+builder.Services.AddScoped<IEntrevistaRepository, EntrevistaRepository>();
 
 // Registro de AutoMapper
 builder.Services.AddAutoMapper(typeof(api_iso_med_pg.Mappers.NormProfile));
 builder.Services.AddAutoMapper(typeof(api_iso_med_pg.Mappers.ScrumProfile));
+builder.Services.AddAutoMapper(typeof(api_iso_med_pg.Mappers.EntrevistaProfile));
 
 builder.Services.AddControllers();
 
