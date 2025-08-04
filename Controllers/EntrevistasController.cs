@@ -4,7 +4,6 @@ using api_iso_med_pg.Models;
 using api_iso_med_pg.Data.Interfaces;
 using api_iso_med_pg.Utilities;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 
 namespace api_iso_med_pg.Controllers
 {
