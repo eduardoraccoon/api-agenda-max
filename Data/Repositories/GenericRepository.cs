@@ -16,12 +16,12 @@ namespace api_iso_med_pg.Data.Repositories
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            var deletedAtProperty = typeof(T).GetProperty("DeletedAt");
+            var deletedAtProperty = typeof(T).GetProperty("FechaEliminacion");
             var idProperty = typeof(T).GetProperty("Id");
             IQueryable<T> query = _dbSet;
             if (deletedAtProperty != null)
             {
-                query = query.Where(e => EF.Property<DateTime?>(e, "DeletedAt") == null);
+                query = query.Where(e => EF.Property<DateTime?>(e, "FechaEliminacion") == null);
             }
             if (idProperty != null)
             {
@@ -46,8 +46,8 @@ namespace api_iso_med_pg.Data.Repositories
         {
             // Forzar UTC en propiedades UpdatedAt y CreatedAt si existen
             var nowUtc = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
-            var updatedAtProp = entity.GetType().GetProperty("UpdatedAt");
-            var createdAtProp = entity.GetType().GetProperty("CreatedAt");
+            var updatedAtProp = entity.GetType().GetProperty("FechaActualizacion");
+            var createdAtProp = entity.GetType().GetProperty("FechaCreacion");
             if (updatedAtProp != null)
             {
                 var val = updatedAtProp.GetValue(entity) as DateTime?;
@@ -67,12 +67,12 @@ namespace api_iso_med_pg.Data.Repositories
             var entity = await _dbSet.FindAsync(id);
             if (entity != null)
             {
-                // Forzar UTC en propiedades DeletedAt, UpdatedAt, CreatedAt si existen
+                // Forzar UTC en propiedades FechaEliminacion, FechaActualizacion, FechaCreacion si existen
                 var nowUtc = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Utc);
-                var deletedAtProp = entity.GetType().GetProperty("DeletedAt");
-                var updatedAtProp = entity.GetType().GetProperty("UpdatedAt");
-                var createdAtProp = entity.GetType().GetProperty("CreatedAt");
-                var deletedByProp = entity.GetType().GetProperty("DeletedBy");
+                var deletedAtProp = entity.GetType().GetProperty("FechaEliminacion");
+                var updatedAtProp = entity.GetType().GetProperty("FechaActualizacion");
+                var createdAtProp = entity.GetType().GetProperty("FechaCreacion");
+                var deletedByProp = entity.GetType().GetProperty("EliminadoId");
 
                 if (deletedAtProp != null)
                     deletedAtProp.SetValue(entity, nowUtc);

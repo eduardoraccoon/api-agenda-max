@@ -21,6 +21,6 @@ public class UpdateEquipamientoDto
     public string? Requerimientos { get; set; }
     public string? NumeroEconomico { get; set; }
     public IFormFile? ArchivoImagen { get; set; }
-    public int? UpdatedBy { get; set; }
-    public DateTime? UpdatedAt { get; set; }
+    public int? ActualizadoId { get; set; }
+    public DateTime? FechaActualizacion { get; set; }
 }

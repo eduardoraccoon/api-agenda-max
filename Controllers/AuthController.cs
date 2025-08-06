@@ -36,14 +36,14 @@ public class AuthController : ControllerBase
         }
         var user = new User
         {
-            Username = dto.Username,
+            Usuario = dto.Username,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password)
         };
         await _userRepository.AddAsync(user);
         return Ok(new BaseResponse<string>
         {
             IsSuccess = true,
-            Data = user.Username,
+            Data = user.Usuario,
             Message = ReplyMessage.MESSAGE_SAVE
         });
     }

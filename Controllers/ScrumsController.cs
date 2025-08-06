@@ -132,8 +132,8 @@ namespace api_iso_med_pg.Controllers
                 dto.UpdatedAt = DateTime.UtcNow;
                 _mapper.Map(dto, existing);
                 // Solo forzar UTC en fechas de actualización, no en delete
-                existing.UpdatedAt = DateTime.SpecifyKind(existing.UpdatedAt ?? DateTime.UtcNow, DateTimeKind.Utc);
-                existing.CreatedAt = DateTime.SpecifyKind(existing.CreatedAt ?? DateTime.UtcNow, DateTimeKind.Utc);
+                existing.FechaActualizacion = DateTime.SpecifyKind(existing.FechaActualizacion ?? DateTime.UtcNow, DateTimeKind.Utc);
+                existing.FechaCreacion = DateTime.SpecifyKind(existing.FechaCreacion ?? DateTime.UtcNow, DateTimeKind.Utc);
                 await _repository.UpdateAsync(existing);
                 return Ok(new BaseResponse<string>
                 {

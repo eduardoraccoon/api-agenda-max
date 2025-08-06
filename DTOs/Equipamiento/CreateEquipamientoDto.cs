@@ -20,6 +20,6 @@ public class CreateEquipamientoDto
     public string? Requerimientos { get; set; }
     public string? NumeroEconomico { get; set; }
     public IFormFile? ArchivoImagen { get; set; }
-    public int? CreatedBy { get; set; }
-    public DateTime? CreatedAt { get; set; }
+    public int? CreadoId { get; set; }
+    public DateTime? FechaCreacion { get; set; }
 }

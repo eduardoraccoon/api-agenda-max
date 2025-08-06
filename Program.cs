@@ -10,7 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+           .UseSnakeCaseNamingConvention());
 
 
 builder.Services.AddScoped<IEquipamientoRepository, EquipamientoRepository>();
@@ -23,6 +24,7 @@ builder.Services.AddScoped<IEntrevistaRepository, EntrevistaRepository>();
 builder.Services.AddAutoMapper(typeof(api_iso_med_pg.Mappers.NormProfile));
 builder.Services.AddAutoMapper(typeof(api_iso_med_pg.Mappers.ScrumProfile));
 builder.Services.AddAutoMapper(typeof(api_iso_med_pg.Mappers.EntrevistaProfile));
+builder.Services.AddAutoMapper(typeof(api_iso_med_pg.Mappers.EquipamientoProfile));
 
 builder.Services.AddControllers();
 

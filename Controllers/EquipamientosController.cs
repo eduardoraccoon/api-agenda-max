@@ -90,7 +90,7 @@ namespace api_iso_med_pg.Controllers
                 var userIdClaim = User.FindFirst("id")?.Value;
                 if (int.TryParse(userIdClaim, out int userId))
                 {
-                     dto.CreatedBy = userId;
+                     dto.CreadoId = userId;
                 }
                 var equipamiento = _mapper.Map<Equipamiento>(dto);
 
@@ -257,7 +257,6 @@ namespace api_iso_med_pg.Controllers
                 });
             }
         }
-
 
         [HttpGet("generate-qr/{id}")]
         public IActionResult GenerateQRCode(int id)
