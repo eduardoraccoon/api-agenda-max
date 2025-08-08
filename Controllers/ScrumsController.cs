@@ -87,9 +87,9 @@ namespace api_iso_med_pg.Controllers
                 var userIdClaim = User.FindFirst("id")?.Value;
                 if (int.TryParse(userIdClaim, out int userId))
                 {
-                    dto.CreatedBy = userId;
+                    dto.CreadoId = userId;
                 }
-                dto.CreatedAt = DateTime.UtcNow;
+                dto.FechaCreacion = DateTime.UtcNow;
                 var scrum = _mapper.Map<Scrum>(dto);
                 var created = await _repository.AddAsync(scrum);
                 return Ok(new BaseResponse<string>
@@ -127,9 +127,9 @@ namespace api_iso_med_pg.Controllers
                 var userIdClaim = User.FindFirst("id")?.Value;
                 if (int.TryParse(userIdClaim, out int userId))
                 {
-                    dto.UpdatedBy = userId;
+                    dto.ActualizadoId = userId;
                 }
-                dto.UpdatedAt = DateTime.UtcNow;
+                dto.FechaActualizacion = DateTime.UtcNow;
                 _mapper.Map(dto, existing);
                 // Solo forzar UTC en fechas de actualización, no en delete
                 existing.FechaActualizacion = DateTime.SpecifyKind(existing.FechaActualizacion ?? DateTime.UtcNow, DateTimeKind.Utc);

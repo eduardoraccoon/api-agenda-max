@@ -4,7 +4,7 @@ namespace api_iso_med_pg.DTOs
     {
         public string? Nombre { get; set; }
         public string? Descripcion { get; set; }
-        public int? CreatedBy { get; set; }
-        public DateTime? CreatedAt { get; set; }
+        public int? CreadoId { get; set; }
+        public DateTime? FechaCreacion { get; set; }
     }
 }

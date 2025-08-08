@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using api_iso_med_pg.DTOs;
+using api_iso_med_pg.DTOs.Compania;
 using api_iso_med_pg.Models;
 using api_iso_med_pg.Data.Interfaces;
 using api_iso_med_pg.Utilities;
@@ -11,25 +11,25 @@ namespace api_iso_med_pg.Controllers
     [ApiController]
     [Authorize]
     [Route("api/[controller]")]
-    public class NormasController : ControllerBase
+    public class CompaniasController : ControllerBase
     {
-        private readonly INormaRepository _repository;
+        private readonly ICompaniaRepository _repository;
         private readonly IMapper _mapper;
-        public NormasController(INormaRepository repository, IMapper mapper)
+        public CompaniasController(ICompaniaRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<BaseResponse<IEnumerable<NormaDto>>>> Get()
+        public async Task<ActionResult<BaseResponse<IEnumerable<CompaniaDto>>>> Get()
         {
             try
             {
-                var norms = await _repository.GetAllAsync();
-                var dtos = _mapper.Map<IEnumerable<NormaDto>>(norms);
+                var companias = await _repository.GetAllAsync();
+                var dtos = _mapper.Map<IEnumerable<CompaniaDto>>(companias);
                 var reply = dtos != null && dtos.Any() ? ReplyMessage.MESSAGE_QUERY : ReplyMessage.MESSAGE_QUERY_EMPTY;
-                return Ok(new BaseResponse<IEnumerable<NormaDto>>
+                return Ok(new BaseResponse<IEnumerable<CompaniaDto>>
                 {
                     IsSuccess = true,
                     Data = dtos,
@@ -38,7 +38,7 @@ namespace api_iso_med_pg.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new BaseResponse<IEnumerable<NormaDto>>
+                return StatusCode(500, new BaseResponse<IEnumerable<CompaniaDto>>
                 {
                     IsSuccess = false,
                     Data = null,
@@ -48,20 +48,20 @@ namespace api_iso_med_pg.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<BaseResponse<NormaDto>>> Get(int id)
+        public async Task<ActionResult<BaseResponse<CompaniaDto>>> Get(int id)
         {
             try
             {
-                var norm = await _repository.GetByIdAsync(id);
-                if (norm == null)
-                    return NotFound(new BaseResponse<NormaDto>
+                var compania = await _repository.GetByIdAsync(id);
+                if (compania == null)
+                    return NotFound(new BaseResponse<CompaniaDto>
                     {
                         IsSuccess = false,
                         Data = null,
                         Message = ReplyMessage.MESSAGE_QUERY_EMPTY
                     });
-                var dto = _mapper.Map<NormaDto>(norm);
-                return Ok(new BaseResponse<NormaDto>
+                var dto = _mapper.Map<CompaniaDto>(compania);
+                return Ok(new BaseResponse<CompaniaDto>
                 {
                     IsSuccess = true,
                     Data = dto,
@@ -70,7 +70,7 @@ namespace api_iso_med_pg.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new BaseResponse<NormaDto>
+                return StatusCode(500, new BaseResponse<CompaniaDto>
                 {
                     IsSuccess = false,
                     Data = null,
@@ -80,7 +80,7 @@ namespace api_iso_med_pg.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<BaseResponse<string>>> Post(CreateNormaDto dto)
+        public async Task<ActionResult<BaseResponse<string>>> Post(CreateCompaniaDto dto)
         {
             try
             {
@@ -90,8 +90,8 @@ namespace api_iso_med_pg.Controllers
                     dto.CreadoId = userId;
                 }
                 dto.FechaCreacion = DateTime.UtcNow;
-                var norma = _mapper.Map<Norma>(dto);
-                var created = await _repository.AddAsync(norma);
+                var compania = _mapper.Map<Compania>(dto);
+                var created = await _repository.AddAsync(compania);
                 return Ok(new BaseResponse<string>
                 {
                     IsSuccess = true,
@@ -110,7 +110,7 @@ namespace api_iso_med_pg.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(UpdateNormaDto dto)
+        public async Task<IActionResult> Put(UpdateCompaniaDto dto)
         {
             try
             {

@@ -39,7 +39,7 @@ public class AuthController : ControllerBase
             Usuario = dto.Username,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password)
         };
-        await _userRepository.AddAsync(user);
+        // await _userRepository.AddAsync(user);
         return Ok(new BaseResponse<string>
         {
             IsSuccess = true,
@@ -74,7 +74,7 @@ public class AuthController : ControllerBase
     {
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Username),
+            new Claim(JwtRegisteredClaimNames.Sub, user.Usuario),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim("id", user.Id.ToString())
         };

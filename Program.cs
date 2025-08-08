@@ -19,12 +19,20 @@ builder.Services.AddScoped<IScrumRepository, ScrumRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<INormaRepository, NormaRepository>();
 builder.Services.AddScoped<IEntrevistaRepository, EntrevistaRepository>();
+builder.Services.AddScoped<ICompaniaRepository, CompaniaRepository>();
+builder.Services.AddScoped<ISucursalRepository, SucursalRepository>();
+builder.Services.AddScoped<ITrabajadorRepository, TrabajadorRepository>();
 
 // Registro de AutoMapper
-builder.Services.AddAutoMapper(typeof(api_iso_med_pg.Mappers.NormProfile));
-builder.Services.AddAutoMapper(typeof(api_iso_med_pg.Mappers.ScrumProfile));
-builder.Services.AddAutoMapper(typeof(api_iso_med_pg.Mappers.EntrevistaProfile));
-builder.Services.AddAutoMapper(typeof(api_iso_med_pg.Mappers.EquipamientoProfile));
+builder.Services.AddAutoMapper(
+    typeof(api_iso_med_pg.Mappers.NormaProfile),
+    typeof(api_iso_med_pg.Mappers.ScrumProfile),
+    typeof(api_iso_med_pg.Mappers.EntrevistaProfile),
+    typeof(api_iso_med_pg.Mappers.EquipamientoProfile),
+    typeof(api_iso_med_pg.Mappers.CompaniaProfile),
+    typeof(api_iso_med_pg.Mappers.SucursalProfile),
+    typeof(api_iso_med_pg.Mappers.TrabajadorProfile)
+);
 
 builder.Services.AddControllers();
 
@@ -48,9 +56,9 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAll",
         policy =>
         {
-            policy.AllowAnyOrigin()  
-                  .AllowAnyHeader()  
-                  .AllowAnyMethod(); 
+            policy.AllowAnyOrigin()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
         });
 });
 
