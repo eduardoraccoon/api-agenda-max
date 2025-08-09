@@ -14,15 +14,29 @@ namespace api_iso_med_pg
         public DbSet<Entrevista> Entrevistas { get; set; }
         public DbSet<Equipamiento> Equipamientos { get; set; }
         public DbSet<Trabajador> Trabajadores { get; set; }
+        public DbSet<Pregunta> Preguntas { get; set; }
+        public DbSet<Respuesta> Respuestas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Configuración específica para Equipamiento si necesitas personalizar algo
             modelBuilder.Entity<Equipamiento>(entity =>
             {
                 entity.ToTable("equipamientos");
                 // Las propiedades se mapearán automáticamente a snake_case
             });
+            // Relación User -> Trabajador
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Trabajador)
+                .WithMany()
+                .HasForeignKey(u => u.TrabajadorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Relación Respuesta -> User (CreadoId)
+            modelBuilder.Entity<Respuesta>()
+                .HasOne(r => r.User)
+                .WithMany()
+                .HasForeignKey(r => r.CreadoId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(modelBuilder);
         }

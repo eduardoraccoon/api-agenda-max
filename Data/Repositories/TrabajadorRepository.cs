@@ -18,7 +18,7 @@ public class TrabajadorRepository : ITrabajadorRepository
         return await _context.Trabajadores.Where(t => t.Estatus == 1).ToListAsync();
     }
 
-    public async Task<Trabajador> GetByIdAsync(int id)
+    public async Task<Trabajador?> GetByIdAsync(int id)
     {
         return await _context.Trabajadores.FindAsync(id);
     }

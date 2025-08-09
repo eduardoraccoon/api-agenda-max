@@ -25,7 +25,15 @@ namespace api_iso_med_pg.Data.Repositories
             }
             if (idProperty != null)
             {
-                query = query.OrderByDescending(e => EF.Property<object>(e, "Id"));
+                var tableName = _context.Model.FindEntityType(typeof(T))?.GetTableName();
+                if (typeof(T).Name == "Pregunta")
+                {
+                    query = query.OrderBy(e => EF.Property<object>(e, "Id"));
+                }
+                else
+                {
+                    query = query.OrderByDescending(e => EF.Property<object>(e, "Id"));
+                }
             }
             return await query.ToListAsync();
         }

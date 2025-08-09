@@ -22,6 +22,8 @@ builder.Services.AddScoped<IEntrevistaRepository, EntrevistaRepository>();
 builder.Services.AddScoped<ICompaniaRepository, CompaniaRepository>();
 builder.Services.AddScoped<ISucursalRepository, SucursalRepository>();
 builder.Services.AddScoped<ITrabajadorRepository, TrabajadorRepository>();
+builder.Services.AddScoped<IPreguntaRepository, PreguntaRepository>();
+builder.Services.AddScoped<IRespuestaRepository, RespuestaRepository>();
 
 // Registro de AutoMapper
 builder.Services.AddAutoMapper(
@@ -31,7 +33,9 @@ builder.Services.AddAutoMapper(
     typeof(api_iso_med_pg.Mappers.EquipamientoProfile),
     typeof(api_iso_med_pg.Mappers.CompaniaProfile),
     typeof(api_iso_med_pg.Mappers.SucursalProfile),
-    typeof(api_iso_med_pg.Mappers.TrabajadorProfile)
+    typeof(api_iso_med_pg.Mappers.TrabajadorProfile),
+    typeof(api_iso_med_pg.Mappers.PreguntaProfile),
+    typeof(api_iso_med_pg.Mappers.RespuestaProfile)
 );
 
 builder.Services.AddControllers();
