@@ -7,6 +7,7 @@ public class CreateEntrevistaDto
     public string? Ciudad { get; set; }
     public string? Telefono { get; set; }
     public string? Correo { get; set; }
+    public string? Direccion { get; set; }
     public string? UrlArchivo { get; set; }
     public IFormFile? ArchivoCV { get; set; }
     public int CreatedBy { get; set; }
