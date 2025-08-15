@@ -86,18 +86,18 @@ namespace api_iso_med_pg.Controllers
                 dto.CreatedBy = 0;
                 dto.CreatedAt = DateTime.UtcNow;
                 var entrevista = _mapper.Map<Entrevista>(dto);
-                if (dto.ArchivoImagen != null && dto.ArchivoImagen.Length > 0)
+                if (dto.ArchivoCV != null && dto.ArchivoCV.Length > 0)
                 {
-                    var allowedTypes = new[] { "image/jpeg", "image/jpg", "image/png", "image/gif" };
-                    if (!allowedTypes.Contains(dto.ArchivoImagen.ContentType.ToLower()))
+                    var allowedTypes = new[] { "image/jpeg", "image/jpg", "image/png", "application/pdf" };
+                    if (!allowedTypes.Contains(dto.ArchivoCV.ContentType.ToLower()))
                     {
                         return BadRequest(new BaseResponse<string>
                         {
                             IsSuccess = false,
-                            Message = "Solo se permiten archivos de imagen (JPEG, PNG, GIF)"
+                            Message = "Solo se permiten archivos de imagen (JPEG, PNG, PDF)"
                         });
                     }
-                    if (dto.ArchivoImagen.Length > 5 * 1024 * 1024)
+                    if (dto.ArchivoCV.Length > 5 * 1024 * 1024)
                     {
                         return BadRequest(new BaseResponse<string>
                         {
@@ -108,14 +108,14 @@ namespace api_iso_med_pg.Controllers
                     var filesPath = Path.Combine(Directory.GetCurrentDirectory(), "Files/Entrevistas/");
                     if (!Directory.Exists(filesPath))
                         Directory.CreateDirectory(filesPath);
-                    var fileExtension = Path.GetExtension(dto.ArchivoImagen.FileName);
+                    var fileExtension = Path.GetExtension(dto.ArchivoCV.FileName);
                     var fileName = $"entrevista_{Guid.NewGuid()}{fileExtension}";
                     var filePath = Path.Combine(filesPath, fileName);
                     using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                        await dto.ArchivoImagen.CopyToAsync(stream);
+                        await dto.ArchivoCV.CopyToAsync(stream);
                     }
-                    entrevista.UrlImagen = $"/Files/Entrevistas/{fileName}";
+                    entrevista.UrlArchivo = $"/Files/Entrevistas/{fileName}";
                 }
                 await _repository.AddAsync(entrevista);
                 return Ok(new BaseResponse<string>

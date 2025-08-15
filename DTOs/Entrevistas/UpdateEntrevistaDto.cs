@@ -8,7 +8,7 @@ public class UpdateEntrevistaDto
     public string? Ciudad { get; set; }
     public string? Telefono { get; set; }
     public string? Correo { get; set; }
-    public string? UrlImagen { get; set; }
+    public string? UrlArchivo { get; set; }
     public int UpdatedBy { get; set; }
     public DateTime UpdatedAt { get; set; }
 }
