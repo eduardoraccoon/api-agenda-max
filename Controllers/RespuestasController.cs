@@ -164,21 +164,55 @@ namespace api_iso_med_pg.Controllers
         [HttpGet("table-evaluations/{workerId}/{dateStart}/{dateEnd}")]
         public async Task<BaseResponse<IEnumerable<GetEvaluationsDto>>> GetTableEvaluations(int workerId, string dateStart, string dateEnd)
         {
+            var dateStartParsed = DateTime.Parse(dateStart);
+            var dateEndParsed = DateTime.Parse(dateEnd);
+
+            // Inicio del día en UTC
+            var dateStartUtc = DateTime.SpecifyKind(dateStartParsed.Date, DateTimeKind.Utc);
+
+            // Fin del día en UTC (23:59:59.999)
+            var dateEndUtc = DateTime.SpecifyKind(
+                dateEndParsed.Date.AddDays(1).AddTicks(-1),
+                DateTimeKind.Utc
+            );
+
+            var evaluations = await _repository.GetTableEvaluationsAsync(workerId, dateStartUtc, dateEndUtc);
+
+            return new BaseResponse<IEnumerable<GetEvaluationsDto>>
+            {
+                IsSuccess = true,
+                Data = evaluations!
+            };
+        }
+
+        [HttpGet("graphic-evaluations/{workerId}/{dateStart}/{dateEnd}")]
+        public async Task<BaseResponse<GetEvaluationsDto>> GetGraphicEvaluations(int workerId, string dateStart, string dateEnd)
+        {
             try
             {
-                var dateStartUtc = DateTime.SpecifyKind(DateTime.Parse(dateStart), DateTimeKind.Utc);
-                var dateEndUtc = DateTime.SpecifyKind(DateTime.Parse(dateEnd), DateTimeKind.Utc);
-                var evaluations = await _repository.GetTableEvaluationsAsync(workerId, dateStartUtc, dateEndUtc);
+                var dateStartParsed = DateTime.Parse(dateStart);
+                var dateEndParsed = DateTime.Parse(dateEnd);
 
-                return new BaseResponse<IEnumerable<GetEvaluationsDto>>
+                // Inicio del día en UTC
+                var dateStartUtc = DateTime.SpecifyKind(dateStartParsed.Date, DateTimeKind.Utc);
+
+                // Fin del día en UTC (23:59:59.999)
+                var dateEndUtc = DateTime.SpecifyKind(
+                    dateEndParsed.Date.AddDays(1).AddTicks(-1),
+                    DateTimeKind.Utc
+                );
+
+                var evaluation = await _repository.GetGraphicEvaluationsAsync(workerId, dateStartUtc, dateEndUtc);
+
+                return new BaseResponse<GetEvaluationsDto>
                 {
                     IsSuccess = true,
-                    Data = evaluations!
+                    Data = evaluation!
                 };
             }
             catch (Exception ex)
             {
-                return new BaseResponse<IEnumerable<GetEvaluationsDto>>
+                return new BaseResponse<GetEvaluationsDto>
                 {
                     IsSuccess = false,
                     Message = ex.Message
