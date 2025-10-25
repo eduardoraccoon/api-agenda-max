@@ -13,29 +13,18 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
            .UseSnakeCaseNamingConvention());
 
-
-builder.Services.AddScoped<IEquipamientoRepository, EquipamientoRepository>();
-builder.Services.AddScoped<IScrumRepository, ScrumRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<INormaRepository, NormaRepository>();
-builder.Services.AddScoped<IEntrevistaRepository, EntrevistaRepository>();
-builder.Services.AddScoped<ICompaniaRepository, CompaniaRepository>();
-builder.Services.AddScoped<ISucursalRepository, SucursalRepository>();
-builder.Services.AddScoped<ITrabajadorRepository, TrabajadorRepository>();
-builder.Services.AddScoped<IPreguntaRepository, PreguntaRepository>();
-builder.Services.AddScoped<IRespuestaRepository, RespuestaRepository>();
+builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+builder.Services.AddScoped<ITrabajoRepository, TrabajoRepository>();
+builder.Services.AddScoped<IEmpresaRepository, EmpresaRepository>();
 
 // Registro de AutoMapper
 builder.Services.AddAutoMapper(
     typeof(api_iso_med_pg.Mappers.NormaProfile),
-    typeof(api_iso_med_pg.Mappers.ScrumProfile),
-    typeof(api_iso_med_pg.Mappers.EntrevistaProfile),
-    typeof(api_iso_med_pg.Mappers.EquipamientoProfile),
-    typeof(api_iso_med_pg.Mappers.CompaniaProfile),
-    typeof(api_iso_med_pg.Mappers.SucursalProfile),
-    typeof(api_iso_med_pg.Mappers.TrabajadorProfile),
-    typeof(api_iso_med_pg.Mappers.PreguntaProfile),
-    typeof(api_iso_med_pg.Mappers.RespuestaProfile)
+    typeof(api_iso_med_pg.Mappers.ClienteProfile),
+    typeof(api_iso_med_pg.Mappers.TrabajoProfile),
+    typeof(api_iso_med_pg.Mappers.EmpresaProfile)
 );
 
 builder.Services.AddControllers();
