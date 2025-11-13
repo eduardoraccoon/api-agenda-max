@@ -3,8 +3,12 @@ using api_iso_med_pg.Data.Interfaces;
 
 namespace api_iso_med_pg.Data.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
-    {
+        public class GenericRepository<T> : IGenericRepository<T> where T : class
+        {
+            public DbContext GetDbContext()
+            {
+                return _context;
+            }
         protected readonly DbContext _context;
         private readonly DbSet<T> _dbSet;
 
@@ -66,7 +70,15 @@ namespace api_iso_med_pg.Data.Repositories
                 var val = createdAtProp.GetValue(entity) as DateTime?;
                 createdAtProp.SetValue(entity, DateTime.SpecifyKind(val ?? nowUtc, DateTimeKind.Utc));
             }
-            _context.Entry(entity).State = EntityState.Modified;
+            var entry = _context.Entry(entity);
+            entry.State = EntityState.Modified;
+            // Si la entidad tiene propiedades de fecha, marcarlas como modificadas
+            var fechaInicioProp = entity.GetType().GetProperty("FechaInicio");
+            var fechaFinProp = entity.GetType().GetProperty("FechaFin");
+            var fechaEntregaProp = entity.GetType().GetProperty("FechaEntrega");
+            if (fechaInicioProp != null) entry.Property("FechaInicio").IsModified = true;
+            if (fechaFinProp != null) entry.Property("FechaFin").IsModified = true;
+            if (fechaEntregaProp != null) entry.Property("FechaEntrega").IsModified = true;
             await _context.SaveChangesAsync();
         }
 

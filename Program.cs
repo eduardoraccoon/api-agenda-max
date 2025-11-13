@@ -18,13 +18,15 @@ builder.Services.AddScoped<INormaRepository, NormaRepository>();
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<ITrabajoRepository, TrabajoRepository>();
 builder.Services.AddScoped<IEmpresaRepository, EmpresaRepository>();
+builder.Services.AddScoped<IPagoRepository, PagoRepository>();
 
 // Registro de AutoMapper
 builder.Services.AddAutoMapper(
     typeof(api_iso_med_pg.Mappers.NormaProfile),
     typeof(api_iso_med_pg.Mappers.ClienteProfile),
     typeof(api_iso_med_pg.Mappers.TrabajoProfile),
-    typeof(api_iso_med_pg.Mappers.EmpresaProfile)
+    typeof(api_iso_med_pg.Mappers.EmpresaProfile),
+    typeof(api_iso_med_pg.Mappers.PagoProfile)
 );
 
 builder.Services.AddControllers();

@@ -14,12 +14,17 @@ namespace api_iso_med_pg.Data.Repositories
 
         public async Task<IEnumerable<Trabajo>> GetAllWithClienteAsync()
         {
-            return await _db.Trabajos.Include(t => t.Cliente).ToListAsync();
+            return await _db.Trabajos
+                .Include(t => t.Cliente)
+                .Where(t => t.FechaEliminacion == null)
+                .ToListAsync();
         }
 
         public async Task<Trabajo?> GetByIdWithClienteAsync(int id)
         {
-            return await _db.Trabajos.Include(t => t.Cliente).FirstOrDefaultAsync(t => t.Id == id);
+            return await _db.Trabajos
+                .Include(t => t.Cliente)
+                .FirstOrDefaultAsync(t => t.Id == id);
         }
     }
 }

@@ -8,4 +8,7 @@ public class CreateTrabajoDto
     public int ClienteId { get; set; }
     public int CreadoId { get; set; }
     public DateTime FechaCreacion { get; set; }
+    public DateTime? FechaInicio { get; set; }
+    public DateTime? FechaFin { get; set; }
+    public DateTime? FechaEntrega { get; set; }
 }

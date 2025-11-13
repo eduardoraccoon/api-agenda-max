@@ -10,6 +10,7 @@ namespace api_iso_med_pg
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Trabajo> Trabajos { get; set; }
         public DbSet<Empresa> Empresas { get; set; }
+        public DbSet<Pago> Pagos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

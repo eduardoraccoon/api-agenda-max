@@ -9,4 +9,7 @@ public class UpdateTrabajoDto
     public int ClienteId { get; set; }
     public int ActualizadoId { get; set; }
     public DateTime FechaActualizacion { get; set; }
+    public DateTime? FechaInicio { get; set; }
+    public DateTime? FechaFin { get; set; }
+    public DateTime? FechaEntrega { get; set; }
 }
