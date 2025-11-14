@@ -22,12 +22,10 @@ namespace api_iso_med_pg.Data.Repositories
 
         public async Task<IEnumerable<Pago>> GetByDateRangeAsync(DateTime fechaInicio, DateTime fechaFin)
         {
-         // Ajustar fechaFin para que sea exclusivo y cubra todo el día
-         var fechaFinExclusivo = fechaFin.AddDays(1);
          return await _db.Pagos
              .Include(p => p.Trabajo)
              .ThenInclude(t => t.Cliente)
-             .Where(p => p.FechaPago >= fechaInicio && p.FechaPago < fechaFinExclusivo)
+             .Where(p => p.FechaPago >= fechaInicio && p.FechaPago < fechaFin)
              .OrderByDescending(p => p.FechaPago)
              .ToListAsync();
         }
