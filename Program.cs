@@ -5,28 +5,31 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using api_iso_med_pg.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
+    )
            .UseSnakeCaseNamingConvention());
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<INormaRepository, NormaRepository>();
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
-builder.Services.AddScoped<ITrabajoRepository, TrabajoRepository>();
-builder.Services.AddScoped<IEmpresaRepository, EmpresaRepository>();
-builder.Services.AddScoped<IPagoRepository, PagoRepository>();
+builder.Services.AddScoped<IWorkRepository, WorkRepository>();
+builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 
-// Registro de AutoMapper
 builder.Services.AddAutoMapper(
     typeof(api_iso_med_pg.Mappers.NormaProfile),
-    typeof(api_iso_med_pg.Mappers.ClienteProfile),
-    typeof(api_iso_med_pg.Mappers.TrabajoProfile),
-    typeof(api_iso_med_pg.Mappers.EmpresaProfile),
-    typeof(api_iso_med_pg.Mappers.PagoProfile)
+    typeof(api_iso_med_pg.Mappers.ClientProfile),
+    typeof(api_iso_med_pg.Mappers.WorkProfile),
+    typeof(api_iso_med_pg.Mappers.CompanyProfile),
+    typeof(api_iso_med_pg.Mappers.PaymentProfile)
 );
 
 builder.Services.AddControllers();

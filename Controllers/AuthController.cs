@@ -36,14 +36,14 @@ public class AuthController : ControllerBase
         }
         var user = new User
         {
-            Usuario = dto.Username,
+            Username = dto.Username,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password)
         };
         // await _userRepository.AddAsync(user);
         return Ok(new BaseResponse<string>
         {
             IsSuccess = true,
-            Data = user.Usuario,
+            Data = user.Username,
             Message = ReplyMessage.MESSAGE_SAVE
         });
     }
@@ -54,11 +54,10 @@ public class AuthController : ControllerBase
         var user = await _userRepository.GetByUsernameAsync(dto.Username);
         if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
         {
-            return Unauthorized(new BaseResponse<string>
+            return Ok(new BaseResponse<string>
             {
                 IsSuccess = false,
-                Data = null,
-                Message = ReplyMessage.MESSAGE_TOKEN_ERROR
+                Data = ReplyMessage.MESSAGE_TOKEN_ERROR
             });
         }
         var token = GenerateJwtToken(user);
@@ -74,7 +73,7 @@ public class AuthController : ControllerBase
     {
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Usuario),
+            new Claim(JwtRegisteredClaimNames.Sub, user.Username),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim("id", user.Id.ToString())
         };

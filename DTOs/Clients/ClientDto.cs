@@ -1,0 +1,10 @@
+namespace api_iso_med_pg.DTOs.Clients;
+
+public class ClientDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = null!;
+    public string? Lastname { get; set; }
+    public string Email { get; set; } = null!;
+    public string Phone { get; set; } = null!;
+}

@@ -10,11 +10,11 @@ namespace api_iso_med_pg.Mappers
         {
             CreateMap<Norma, NormaDto>().ReverseMap();
             CreateMap<CreateNormaDto, Norma>()
-                .ForMember(dest => dest.CreadoId, opt => opt.MapFrom(src => src.CreadoId))
-                .ForMember(dest => dest.FechaCreacion, opt => opt.MapFrom(src => src.FechaCreacion));
+                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.CreadoId))
+                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.FechaCreacion));
             CreateMap<UpdateNormaDto, Norma>()
-                .ForMember(dest => dest.ActualizadoId, opt => opt.MapFrom(src => src.ActualizadoId))
-                .ForMember(dest => dest.FechaActualizacion, opt => opt.MapFrom(src => src.FechaActualizacion));
+                .ForMember(dest => dest.CreatedBy, opt => opt.MapFrom(src => src.ActualizadoId))
+                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.FechaActualizacion));
         }
     }
 }
