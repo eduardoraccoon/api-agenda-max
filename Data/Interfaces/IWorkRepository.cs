@@ -4,7 +4,7 @@ namespace api_iso_med_pg.Data.Interfaces
 {
     public interface IWorkRepository : IGenericRepository<Work>
     {
-        Task<IEnumerable<Work>> GetAllWithClienteAsync();
-        Task<Work?> GetByIdWithClienteAsync(int id);
+        Task<IEnumerable<Work>> GetAllWithClientAsync();
+        Task<Work?> GetByIdWithClientAsync(int id);
     }
 }

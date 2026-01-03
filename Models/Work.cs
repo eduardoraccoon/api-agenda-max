@@ -2,6 +2,7 @@ namespace api_iso_med_pg.Models;
 
 public class Work : BaseModel
 {
+    public string? Title { get; set; } = null!;
     public string Description { get; set; } = null!;
     public decimal Cost { get; set; }
     public int Status { get; set; }

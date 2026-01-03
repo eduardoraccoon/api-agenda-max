@@ -12,7 +12,7 @@ namespace api_iso_med_pg.Data.Repositories
             _db = context;
         }
 
-        public async Task<IEnumerable<Work>> GetAllWithClienteAsync()
+        public async Task<IEnumerable<Work>> GetAllWithClientAsync()
         {
             return await _db.Works
                 .Include(t => t.Client)
@@ -20,7 +20,7 @@ namespace api_iso_med_pg.Data.Repositories
                 .ToListAsync();
         }
 
-        public async Task<Work?> GetByIdWithClienteAsync(int id)
+        public async Task<Work?> GetByIdWithClientAsync(int id)
         {
             return await _db.Works
                 .Include(t => t.Client)

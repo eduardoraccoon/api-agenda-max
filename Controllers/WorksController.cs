@@ -15,7 +15,7 @@ namespace api_iso_med_pg.Controllers
     {
 
 
-        private DateTime? NormalizarFecha(DateTime? fecha)
+        private DateTime? DateFormat(DateTime? fecha)
         {
             if (!fecha.HasValue) return null;
             var f = fecha.Value;
@@ -37,7 +37,7 @@ namespace api_iso_med_pg.Controllers
         {
             try
             {
-                var trabajos = await _repository.GetAllWithClienteAsync();
+                var trabajos = await _repository.GetAllWithClientAsync();
                 var dtos = _mapper.Map<IEnumerable<WorkDto>>(trabajos);
                 return Ok(new BaseResponse<IEnumerable<WorkDto>>
                 {
@@ -61,7 +61,7 @@ namespace api_iso_med_pg.Controllers
         {
             try
             {
-                var work = await _repository.GetByIdWithClienteAsync(id);
+                var work = await _repository.GetByIdWithClientAsync(id);
                 if (work == null)
                     return NotFound(new BaseResponse<WorkDto>
                     {
